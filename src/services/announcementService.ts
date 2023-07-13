@@ -1,10 +1,8 @@
-import { strict } from "assert";
 import { Announcement } from "../dtos/announcement";
 import { UserService } from "./userService";
 import express, { Express } from "express";
 
 import { createServer } from "http";
-import { Server, Socket } from "socket.io";
 import { io } from "..";
 import logger from "../logger/logger";
 
@@ -16,11 +14,7 @@ const server = createServer(app);
 export class AnnouncementService {
   private announcements: Announcement[];
   private userService;
-  private notificationType: string;
-  private socketio;
   constructor() {
-    this.socketio = Server;
-    this.notificationType = "";
     this.announcements = [];
     this.userService = new UserService();
   }
@@ -37,6 +31,9 @@ export class AnnouncementService {
 
   public async backgroundFunction() {
     try {
+      let announcement: NotificationType = NotificationType.Announcement;
+      let login: NotificationType = NotificationType.Login;
+
       const users = await this.userService.GetUsers();
       for (let i = 0; i < users.length; i++) {
         for (let j = 0; j < this.announcements.length; j++) {
@@ -47,10 +44,10 @@ export class AnnouncementService {
               io.on("connection", (socket) => {
                 console.log("A client connected: " + socket.id);
 
-                socket.on("login", function (message: any) {
+                socket.on(login, function (message: any) {
                   console.log(message);
                   //io.to(users[i].socketId).emit("announcement", "New Announcement");
-                  io.emit("announcement", "New Announcement");
+                  io.emit(announcement, "New Announcement");
                 });
               });
               this.announcements[j].assignees.splice(k, 1);

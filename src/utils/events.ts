@@ -1,3 +1,0 @@
-enum Events{
-    Announcement = "Announcement"
-}
