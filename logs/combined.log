@@ -1,0 +1,2 @@
+{"level":"info","message":"Hello, Winston Logger!","service":"notification","timestamp":"2023-07-12 23:20:10"}
+{"level":"error","message":"Hello, Winston Logger!","service":"notification","timestamp":"2023-07-12 23:20:43"}
