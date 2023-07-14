@@ -34,12 +34,21 @@ export class AnnouncementService {
       let announcement: NotificationType = NotificationType.Announcement;
       let login: NotificationType = NotificationType.Login;
 
-      const users = await this.userService.GetUsers();
-      for (let i = 0; i < users.length; i++) {
+
+      for (let i = 0; i < this.announcements.length; i++) {
+        const userIds = this.announcements[i].assignees;
+        const announcementData = this.announcements[i].announcementId
+        const distinctArray = [... new Set(userIds)];
+        const users = await this.userService.GetUsers();
+
+        io.to(["", "", ""]).emit("event", { message: "Some thing" })
+
+
         for (let j = 0; j < this.announcements.length; j++) {
           for (let k = 0; k < this.announcements[j].assignees.length; k++) {
             if (users[i].userId === this.announcements[j].assignees[k].id) {
               console.log("Found: " + users[i].socketId);
+
 
               io.on("connection", (socket) => {
                 console.log("A client connected: " + socket.id);
