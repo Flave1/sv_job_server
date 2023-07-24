@@ -9,14 +9,11 @@ import swaggerSpec from './swagger/swagger';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import { AnnouncementService} from './services/announcementService';
 
-const app = express();
+export const app = express();
 app.use(bodyParser.json())
 
 const server = createServer(app);
-
-//const io = new Server(server);
 
 app.use('/announcement', announcementRoute);
 app.use('/user', userRoute);
@@ -34,26 +31,13 @@ export const io = new Server(server, {
   }
 });
 
-// app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-async function sendNotification() {
-  let announcement = new AnnouncementService;
-  announcement.backgroundFunction()
-  // io.on('connection', (socket) => {
-  //   console.log('A client connected: '+ socket.id);
-    
-  //   socket.on("login", function(message: any) {
-  //      announcement.backgroundFunction()
-  //   });
-  // })
-  
-}
-
-sendNotification()
+io.on('connection', (socket) => {
+    console.log('A client connected: '+ socket.id);
+  })
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-const port = 3000;
+const port = 3200;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

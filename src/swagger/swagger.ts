@@ -16,7 +16,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000", // Replace with your server URL
+        url: "http://localhost:3200", // Replace with your server URL
       },
     ],
     components: {
@@ -41,6 +41,30 @@ const options = {
               announcementId: {
                 type: "string",
               },
+            subject: {
+              type: "string",
+            },
+            content: {
+              type: "string",
+            },
+            notificationSourceId: {
+              type: "string",
+            },
+            notificationEmailLink: {
+              type: "string",
+            },
+            notificationPageLink: {
+              type: "string",
+            },
+            type: {
+              type: "string",
+            },
+            group: {
+              type: "string",
+            },
+            dateCreated: {
+              type: "string",
+            },
               assignees: {
                 "type": "array",
                 "items": {

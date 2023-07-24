@@ -17,4 +17,8 @@ export class UserRepository {
     const users = await UserModel.find()
       return users;
   }
+  public async GetUserByIds(userIds: String[]): Promise<GetUser[]> {
+    const users = await UserModel.find({userId: userIds})
+      return users;
+  }
 }
