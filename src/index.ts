@@ -6,14 +6,19 @@ import DbConfig from './data/dbconfig'
 import dbconfig from './data/dbconfig';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swagger';
-import { createServer } from 'http';
-import { Server } from 'socket.io';
+import { createServer, Server as ExpressServer } from 'http';
+import { Socket, Server as SocketIOServer } from 'socket.io';
 import cors from 'cors';
 
 export const app = express();
 app.use(bodyParser.json())
 
-const server = createServer(app);
+const httpServer: ExpressServer = createServer(app);
+export const io: SocketIOServer = new SocketIOServer(httpServer, {
+  cors: {
+    origin: "*",
+  }
+});
 
 app.use('/announcement', announcementRoute);
 app.use('/user', userRoute);
@@ -25,15 +30,15 @@ async function connectDb() {
 
 connectDb();
 
-export const io = new Server(server, {
-  cors: {
-    origin: "*",
-  }
-});
+// export const io = new ExpressServer(expressServer, {
+//   cors: {
+//     origin: "*",
+//   }
+// });
 
 io.on('connection', (socket) => {
-    console.log('A client connected: '+ socket.id);
-  })
+  console.log('A client connected: ' + socket.id);
+})
 
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
@@ -41,4 +46,3 @@ const port = 3200;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-io.listen(9000);
