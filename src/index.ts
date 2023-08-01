@@ -12,6 +12,7 @@ import cors from 'cors';
 
 export const app = express();
 app.use(bodyParser.json())
+app.use(cors());
 
 const httpServer: ExpressServer = createServer(app);
 export const io: SocketIOServer = new SocketIOServer(httpServer, {
@@ -22,7 +23,7 @@ export const io: SocketIOServer = new SocketIOServer(httpServer, {
 
 app.use('/announcement', announcementRoute);
 app.use('/user', userRoute);
-app.use(cors());
+
 
 async function connectDb() {
   await dbconfig.connect();
@@ -43,6 +44,6 @@ io.on('connection', (socket) => {
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const port = 3200;
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

@@ -8,5 +8,6 @@ export interface Announcement {
     type: string;
     group: string;
     dateCreated: string;
+    clientId: string;
     assignees: [{id: string}]
   }

@@ -65,6 +65,9 @@ const options = {
             dateCreated: {
               type: "string",
             },
+            clientId: {
+              type: "string",
+            },
               assignees: {
                 "type": "array",
                 "items": {

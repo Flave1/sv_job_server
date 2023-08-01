@@ -54,7 +54,7 @@ export class AnnouncementService {
         }
         else
         {
-          io.emit(announcementData.group.toLowerCase()+"-"+announcementData.type, { announcementData })
+          io.emit(announcementData.clientId.toLowerCase()+"_"+announcementData.group.toLowerCase()+"_"+announcementData.type, { announcementData })
         }
       }
       this.announcements.splice(0)
