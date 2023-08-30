@@ -1,10 +1,9 @@
-import express, { Router, Request, Response } from 'express';
+
 import { UserController } from '../userController';
+import { Express } from 'express';
 
-const userRoute: Router = express.Router();
-const userController = new UserController();
-
-userRoute.post('/create', userController.AddUser);
-userRoute.get('/get-all', userController.GetUsers);
-
-export default userRoute;
+const basePath: String = '/user';
+export const userRoute = (app: Express) => {
+    app.post(`${basePath}/create`, UserController.AddUser);
+    app.get(`${basePath}/get-all`, UserController.GetUsers);
+}

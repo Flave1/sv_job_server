@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { AnnouncementService } from '../services/announcementService';
+import logger from '../logger/logger';
 
 /**
  * @swagger
@@ -7,12 +8,8 @@ import { AnnouncementService } from '../services/announcementService';
  *   name: Announcement
  *   description: Announcement operations
  */
-export class AnnouncementController {
-  private announcementService;
-  
-  constructor() {
-    this.announcementService = new AnnouncementService();
-  }
+class AnnouncementController {
+
   /**
  * @swagger
  * /announcement/create:
@@ -33,8 +30,16 @@ export class AnnouncementController {
  *             schema:
  *               $ref: '#/components/schemas/Announcement'
  */
-  public CreateAnnouncement = (req: Request, res: Response) => {
-    const newAnnouncement = this.announcementService.CreateAnnouncement(req.body);
-    res.status(201).json(newAnnouncement);
+  static async CreateAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const response = AnnouncementService.CreateAnnouncement(req.body);
+      res.status(200).json(response)
+    } catch (error) {
+      logger.error(error);
+      next(error)
+    }
   }
 }
+
+
+export default AnnouncementController;

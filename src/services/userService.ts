@@ -1,60 +1,53 @@
 import { UserRepository } from "../data/repositories/userRepository";
 import { CreateUser } from "../dtos/user/CreateUser";
 import { GetUser } from "../dtos/user/GetUser";
-import logger from "../logger/logger";
+import { ApiResponse } from "../types/ApiResponse";
 
 export class UserService {
-  private userRepository;
-  private socketId;
-  constructor() {
-    this.userRepository = new UserRepository();
-    this.socketId = ""
+  // private socketId;
+  
+  static async AddUser(user: CreateUser): Promise<ApiResponse<any>> {
+    const response = new ApiResponse<any>();
+    const result = await UserRepository.AddUser(user);
+    response.data = result
+    response.message = "Successful";
+    response.success = true;
+    return response;
   }
-  public AddUser(user: CreateUser) {
-    this.userRepository
-      .AddUser(user)
-      .then((newUser) => {
-        console.log(user.email+ " Created")
-        return newUser;
-      })
-      .catch((error) => {
-        logger.error(error);
-      });
-  }
-  public async GetUsers(): Promise<GetUser[]> {
-    try {
-      const users = await this.userRepository.GetUsers();
 
+  static async GetUsers(): Promise<ApiResponse<any>> {
+    const response = new ApiResponse<any>();
+    const users = await UserRepository.GetUsers();
       const userList = users.map((user: GetUser) => ({
         socketId: user.socketId,
         userId: user.userId,
         email: user.email,
       }));
-      return userList;
-    } catch (error) {
-      logger.error(error);
-      return []
-    }
+      response.data = userList
+      response.message = "Successful";
+      response.success = true;
+      return response;
   }
-  public async GetUserByIds(userIds: String[]): Promise<GetUser[]> {
-    try {
-      const users = await this.userRepository.GetUserByIds(userIds);
+
+  static async GetUserByIds(userIds: String[]): Promise<ApiResponse<any>> {
+    const response = new ApiResponse<any>();
+    const users = await UserRepository.GetUserByIds(userIds);
       const userList = users.map((user: GetUser) => ({
         socketId: user.socketId,
         userId: user.userId,
         email: user.email,
       }));
-      return userList;
-    } catch (error) {
-      logger.error(error);
-      return []
-    }
+      response.data = userList
+      response.message = "Successful";
+      response.success = true;
+      return response;
+    
   }
-  public setSocketId(socketId: string): String {
-    this.socketId = socketId;
-    return socketId
-  }
-  public getSocketId(): String {
-    return this.socketId
-  }
+  // public setSocketId(socketId: string): String {
+  //   this.socketId = socketId;
+  //   return socketId
+  // }
+  // public getSocketId(): String {
+  //   return this.socketId
+  // }
 }

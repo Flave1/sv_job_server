@@ -1,9 +1,9 @@
-import express, { Router, Request, Response } from 'express';
-import { AnnouncementController } from '../announcementController';
+import AnnouncementController from '../announcementController';
 
-const announcementRoute: Router = express.Router();
-const announcementController = new AnnouncementController();
+import { Express } from 'express';
 
-announcementRoute.post('/create', announcementController.CreateAnnouncement);
+const basePath: String = '/notification';
 
-export default announcementRoute;
+export const announcementRoute = (app: Express) => {
+    app.post(`${basePath}/create`, AnnouncementController.CreateAnnouncement)
+}
