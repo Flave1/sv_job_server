@@ -1,6 +1,7 @@
 import { Announcement } from "../dtos/announcement";
 import { io } from "..";
 import { ApiResponse } from '../types/ApiResponse'
+import AppError from "../types/AppError";
 
 export class AnnouncementService {
   private static announcements: Announcement[];
