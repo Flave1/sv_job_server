@@ -35,7 +35,7 @@ const options = {
             },
           },
         },
-        Announcement: {
+        Notification: {
             type: "object",
             properties: {
               announcementId: {

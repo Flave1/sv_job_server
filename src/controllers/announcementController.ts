@@ -5,30 +5,30 @@ import logger from '../logger/logger';
 /**
  * @swagger
  * tags:
- *   name: Announcement
- *   description: Announcement operations
+ *   name: Notification
+ *   description: Notification operations
  */
 class AnnouncementController {
 
   /**
  * @swagger
- * /announcement/create:
+ * /notification/create:
  *   post:
  *     summary: Create Announcement
- *     tags: [Announcement]
+ *     tags: [Notification]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Announcement'
+ *             $ref: '#/components/schemas/Notification'
  *     responses:
  *       201:
- *         description: Announcement added successfully
+ *         description: Notification added successfully
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Announcement'
+ *               $ref: '#/components/schemas/Notification'
  */
   static async CreateAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {

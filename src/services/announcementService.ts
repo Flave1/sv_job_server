@@ -3,10 +3,12 @@ import { io } from "..";
 import { ApiResponse } from '../types/ApiResponse'
 
 export class AnnouncementService {
-  private static announcements: Announcement[];
+  private static announcements: Announcement[] = [];
+
   static async CreateAnnouncement(announcementData: any): Promise<ApiResponse<any>> {
     const response = new ApiResponse<any>();
     this.announcements.push(announcementData);
+    console.log("Announcement: "+ announcementData)
     this.backgroundFunction();
     response.data = announcementData
     response.message = "Successful";
@@ -21,7 +23,7 @@ export class AnnouncementService {
         io.to(announcementData.assignees.map(x => x.id)).emit(announcementData.type, { announcementData })
       }
       else {
-        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
+        io.emit(announcementData.clientId.toLowerCase() + "+_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
       }
     }
     this.announcements.splice(0)
