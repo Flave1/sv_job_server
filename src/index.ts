@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
   console.log('A client connected with: ' + socket.id);
 })
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ message: "Server is up and running" });
+});
+
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 httpServer.listen(port, () => {
