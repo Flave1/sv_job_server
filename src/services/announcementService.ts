@@ -17,9 +17,6 @@ export class AnnouncementService {
   }
 
   static async backgroundFunction() {
-    // this.announcements.forEach(ite => {
-    //   console.log('announcements', ite);
-    // })
     for (let i = 0; i < this.announcements.length; i++) {
       const announcementData = this.announcements[i]
       if (announcementData.assignees.length > 0) {
@@ -30,7 +27,7 @@ export class AnnouncementService {
       else {
 
         console.log('emited to all');
-        io.emit(announcementData.clientId.toLowerCase() + "+_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
+        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
       }
     }
     this.announcements.splice(0)
