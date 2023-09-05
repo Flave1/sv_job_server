@@ -32,7 +32,7 @@ class AnnouncementController {
  */
   static async CreateAnnouncement(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const response = AnnouncementService.CreateAnnouncement(req.body);
+      const response = await AnnouncementService.CreateAnnouncement(req.body);
       res.status(200).json(response)
     } catch (error) {
       logger.error(error);
