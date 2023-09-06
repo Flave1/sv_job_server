@@ -2,6 +2,7 @@ import { AnnouncementModel } from "../dtos/announcement";
 import { io } from "..";
 import { ApiResponse } from '../types/ApiResponse'
 import AppError from "../types/AppError";
+import logger from "../logger/logger";
 
 export class AnnouncementService {
   private static announcements: AnnouncementModel[] = [];
@@ -20,13 +21,12 @@ export class AnnouncementService {
     for (let i = 0; i < this.announcements.length; i++) {
       const announcementData = this.announcements[i]
       if (announcementData.assignees.length > 0) {
-        console.log('emited specific user');
-
         io.to(announcementData.assignees.map(x => x.id)).emit(announcementData.type, { announcementData })
+        logger.info('Emited to specific users: ', announcementData.assignees)
       }
       else {
-        console.log('emited to all');
-        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
+        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData });
+        logger.info('Emited to all users: ', announcementData.clientId)
       }
     }
     this.announcements.splice(0)

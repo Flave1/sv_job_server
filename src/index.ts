@@ -9,6 +9,7 @@ import { createServer, Server as ExpressServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import cors from 'cors';
 import { port } from './config';
+import logger from './logger/logger';
 
 export const app = express();
 app.use(bodyParser.json())
@@ -29,6 +30,7 @@ async function connectDb() {
 connectDb();
 
 io.on('connection', (socket) => {
+  logger.info('Client connected: ' + socket.id)
   console.log('A client connected with: ' + socket.id);
 })
 
