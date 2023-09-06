@@ -28,7 +28,6 @@ export class AnnouncementService {
         io.to(announcementData.assignees.map(x => x.id)).emit(announcementData.type, { announcementData })
       }
       else {
-
         console.log('emited to all');
         io.emit(announcementData.clientId.toLowerCase() + "+_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
       }
