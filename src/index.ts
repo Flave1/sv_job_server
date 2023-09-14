@@ -9,6 +9,7 @@ import { createServer, Server as ExpressServer } from 'http';
 import { Server as SocketIOServer } from 'socket.io';
 import cors from 'cors';
 import { port } from './config';
+import { learningRoute } from './controllers/endpoints/learning';
 
 export const app = express();
 app.use(bodyParser.json())
@@ -21,12 +22,13 @@ export const io: SocketIOServer = new SocketIOServer(httpServer, {
 
 announcementRoute(app);
 userRoute(app);
+learningRoute(app);
 
 
 async function connectDb() {
   await dbconfig.connect();
 }
-connectDb();
+//connectDb();
 
 io.on('connection', (socket) => {
   console.log('A client connected with: ' + socket.id);
