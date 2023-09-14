@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '../services/userService';
 import logger from '../logger/logger';
+import axios, { AxiosResponse } from 'axios';
 
 /**
  * @swagger

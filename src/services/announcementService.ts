@@ -27,6 +27,11 @@ export class AnnouncementService {
       else {
 
         console.log('emited to all');
+        if(announcementData.group.toLowerCase() == "teacher")
+        {
+          var group = "admin"
+          io.emit(announcementData.clientId.toLowerCase() + "_"+ group +"_" + announcementData.type, { announcementData })
+        }
         io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
       }
     }
