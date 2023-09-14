@@ -25,8 +25,13 @@ export class AnnouncementService {
         logger.info('Emited to specific users: ', announcementData.assignees)
       }
       else {
-        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData });
-        logger.info('Emited to all users: ', announcementData.clientId)
+        console.log('emited to all');
+        if(announcementData.group.toLowerCase() == "teacher")
+        {
+          var group = "admin"
+          io.emit(announcementData.clientId.toLowerCase() + "_"+ group +"_" + announcementData.type, { announcementData })
+        }
+        io.emit(announcementData.clientId.toLowerCase() + "_" + announcementData.group.toLowerCase() + "_" + announcementData.type, { announcementData })
       }
     }
     this.announcements.splice(0)
